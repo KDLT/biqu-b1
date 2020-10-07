@@ -11,6 +11,10 @@ holeGap=31;
 
 chamferSize=4;
 
+// for testing the perpendicular alignment of the extruder to the coupler
+shaftD=8;
+shaftH=18;
+
 module isoceles(s=chamferSize) {
     polygon(points = [[0,s], [s,0], [0,0]]);
 };
@@ -22,16 +26,18 @@ module quadHole(h=facePlateHeight, gap=holeGap, d=holeDia) {
 };
 //quadHole();
 
-module facePlate(h=facePlateHeight, l=motor_sideLength, g=holeGap, hd=hubDia) {
+module facePlate(h=facePlateHeight, l=motor_sideLength, g=holeGap, d=holeDia, hd=hubDia, shaft=false, shaftD=shaftD, shaftH=shaftH) {
     difference() {
         linear_extrude(h) {
-            motorOutline();
+            motorOutline(l=l);
         };
-        translate([(l-g)/2, (l-g)/2, 0]) quadHole();
-        translate([l/2,l/2,0]) cylinder(h=h, d=hd);
+        translate([(l-g)/2, (l-g)/2, 0]) quadHole(h=h, gap=g, d=d);
+        translate([l/2,l/2,0]) cylinder(h=h, d=hd, $fn=80);
     };
+    // output shaft visualized
+    if (shaft) { translate([l/2,l/2,-shaftH]) cylinder(h=shaftH, d=shaftD); };
 }
-facePlate();
+//facePlate();
 
 module chamfers(l=motor_sideLength, s=chamferSize){
     translate([0,0,0])
@@ -58,10 +64,16 @@ module motorOutline(l=motor_sideLength, c=chamferSize) {
 module sleeve(l=motor_sideLength, t=sleeveThickness, h=sleeveHeight, c=chamferSize){
     linear_extrude(height=h) {
         difference() {
-            offset(delta=sleeveThickness) { motorOutline(); };
-            motorOutline();
+            offset(delta=t) { motorOutline(l=l); };
+            motorOutline(l=l);
         };
     };
     //offset(delta=t, chamfer=true) { square(size[0], center=true); };
 };
-sleeve();
+//sleeve();
+
+module motorHousing(h=facePlateHeight, l=motor_sideLength, g=holeGap, hd=hubDia, t=sleeveThickness, sh=sleeveHeight, c=chamferSize, shaft=true, shaftD=shaftD, shaftH=shaftH) {
+    facePlate(h=h, l=l, g=g, hd=hd, shaft=shaft, shaftD=shaftD, shaftH=shaftH);
+    sleeve(l=l, t=t, h=sh, c=c);
+};
+motorHousing();
