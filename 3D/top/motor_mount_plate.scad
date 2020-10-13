@@ -10,9 +10,9 @@ riseHeight = 10; // versions = [10, 13, 16]
 // sleeve height is along y now kasi rotated
 sleeveHeight = 12; // versions = [10, 12]
 motor_sideLength = 43; // original 42.5
-sleeveThickness = 3.2; // versions = [2, 3, 3.2]
+sleeveThickness = 2.4; // versions = [2, 3, 3.2, 2.4]
 chamferSize=4;
-facePlateHeight=2.4; // versions = [1.6, 2.4]
+facePlateHeight=1.2; // versions = [1.6, 2.4, 1.2]
 
 //sleeve(t=sleeveThickness); // delta=t was corrected in motor_mount.scad
 
