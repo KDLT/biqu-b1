@@ -18,7 +18,8 @@ pairHoleHotendXGap = 11; // versions = [9,12,11]
 hotendY = 30; // size of hotend (heatsink talaga) along y axis
 hotendZ = 30 + 0.12; // size of hotend (heatsink talaga) along z axis
 hotendX = 17.9; //
-verticalHeight=hotendZ + 0.4; // hotendZ = 30, kaya may + kasi maybridge na lulundo
+// hotendZ = 30 + sag allowance + bottomPlateThickness
+verticalHeight = hotendZ + 0.4 + bottomPlateThickness; 
 
 topBeamThickness = 1.2; //ito ang bridge para hindi sakang ang verticals
 hotendEdgeYOffset = (mainPlateDimensions[1] - hotendY)/2 - 0.2; echo("heYOff", hotendEdgeYOffset); // -0.2 kasi sobrang sikip ng true value
@@ -45,11 +46,11 @@ module bottomPlate(sizePlate=bottomPlateDimensions, d=smallDia, hcXGap=pairHoleC
     };
     bottomPlateSolid(); //bottomPlate amounts to this
 
-    module bottomPlateHoles(d=smallDia, h=hh, db=bigHoleDia) {
+    module bottomPlateHoles(d=smallDia, h=hh, db=bigHoleDia, poly=80) {
         for (x=[0, qhg[0]], y=[0, qhg[1]]) {
-            translate([x, y, 0]) cylinder(d=d, h=h, $fn=20);
+            translate([x, y, 0]) cylinder(d=d, h=h, $fn=poly);
         };
-        translate([bho[0],bho[1],0]) cylinder(d=db, h=h);
+        translate([bho[0],bho[1],0]) cylinder(d=db, h=h, $fn=poly);
     }; //bottomPlateHoles();
 
     module bottomPlateHorizontal(dPlate=sizePlate, h=sizePlate[2], qhXOff=quadHoleDatumEdgeXOffset) {

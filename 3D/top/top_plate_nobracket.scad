@@ -112,4 +112,4 @@ module topPlate(dPlate=mainPlateDimensions, rh=totalHeight, dc=capDiameter, db=d
     // params are my design choices versus the main plate's whose features depend on the actual aluminum plate where the hotend's mounted
     riserPlate(rh=rh, dc=dc, db=db, filament=filament, filamentD=filamentD, filamentH=filamentH, cxoff=cxoff, cyoff=cyoff);
 };
-topPlate(filament=false);
+//topPlate(filament=false);

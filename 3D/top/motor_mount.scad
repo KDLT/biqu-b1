@@ -40,8 +40,9 @@ module facePlate(h=facePlateHeight, l=motor_sideLength, g=holeGap, d=holeDia, hd
 //facePlate();
 
 module chamfers(l=motor_sideLength, s=chamferSize){
-    translate([0,0,0])
-        rotate([0,0,0]) isoceles();
+    // lower right chamfer is ommitted for continuity with the brace added later
+    /* translate([0,0,0]) */
+    /*     rotate([0,0,0]) isoceles(); */
     translate([0,l,0])
         rotate([0,0,-90]) isoceles();
     translate([l,0,0])
@@ -76,4 +77,4 @@ module motorHousing(h=facePlateHeight, l=motor_sideLength, g=holeGap, hd=hubDia,
     facePlate(h=h, l=l, g=g, hd=hd, shaft=shaft, shaftD=shaftD, shaftH=shaftH);
     sleeve(l=l, t=t, h=sh, c=c);
 };
-motorHousing();
+//motorHousing();
